@@ -2,61 +2,72 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import ReactDOM from 'react-dom';
 import { scaleLinear, max, select } from 'd3';
+import { Graph } from 'react-d3-graph';
 import d3Chart from './d3Chart';
+import OneMore from './oneMore';
+
+
+// Graph payload (with minimalist structure) 
+const data = {
+  nodes: [
+    {id: 'Harry', type: (<div>eheee</div>)},
+    {id: 'Sally'},
+    {id: 'Alice'}
+  ],
+  links: [
+      {source: 'Harry', target: 'Sally'},
+      {source: 'Harry', target: 'Alice'},
+  ]
+};
+
+// The graph configuration 
+const myConfig = {
+  highlightBehavior: true,
+  automaticRearrangeAfterDropNode: true,
+  node: {
+      color: 'lightgreen',
+      size: 500,
+      highlightStrokeColor: 'blue',
+      type: 'diamond'
+  },
+  width: 800,
+  link: {
+      highlightColor: 'lightblue'
+  }
+};
+
+// Graph event callbacks 
+const onClickNode = function(nodeId) {
+  // window.alert('Clicked node', nodeId);
+};
+
+const onMouseOverNode = function(nodeId) {
+  // window.alert('Mouse over node', nodeId);
+};
+
+const onMouseOutNode = function(nodeId) {
+  // window.alert('Mouse out node', nodeId);
+};
+
+const onClickLink = function(source, target) {
+  // window.alert(`Clicked link between ${source} and ${target}`);
+};
 
 // style={{backgroundImage: 'url(http://i.giphy.com/5lF3pQpdquCBy.gif)'}}
-export default class Graph extends Component {
-  constructor (props) {
-    super(props);
-    this.createBarChart = this.createBarChart.bind(this);
-  }
-
-  componentDidMount () {
-    this.createBarChart();
-  }
-  componentDidUpdate () {
-    this.createBarChart();
-  }
-  createBarChart () {
-    const node = this.node;
-    const dataMax = max(this.props.data);
-    const yScale = scaleLinear()
-         .domain([0, dataMax])
-         .range([0, this.props.size[1]]);
-    select(node)
-      .selectAll('rect')
-      .data(this.props.data)
-      .enter()
-      .append('rect');
-
-    select(node)
-      .selectAll('rect')
-      .data(this.props.data)
-      .exit()
-      .remove();
-
-    select(node)
-      .selectAll('rect')
-      .data(this.props.data)
-      .style('fill', '#fe9922')
-      .attr('x', (d, i) => i * 25)
-      .attr('y', d => {
-        let x = this.props.size[1];
-        let y = yScale(d);
-        let z = x - y;
-        return z;
-      })
-      .attr('height', d => yScale(d))
-      .attr('width', 25);
-  }
-
+export default class Graphy extends Component {
   render () {
     return (
       <div
         className='flex justify-center items-center h-100 tc-l bg-center cover bg-black'>
         <Paper>
-          <svg ref={node => this.node = node}
-            width={500} height={500} />
+          <Graph
+            id='graph-id' // id is mandatory, if no id is defined rd3g will throw an error 
+            data={data}
+            config={myConfig}
+            onClickNode={onClickNode}
+            onClickLink={onClickLink}
+            onMouseOverNode={onMouseOverNode}
+            onMouseOutNode={onMouseOutNode} />
         </Paper>
       </div>
     );

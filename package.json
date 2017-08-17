@@ -6,6 +6,7 @@
     "d3": "^4.10.0",
     "material-ui": "^0.18.1",
     "react": "^15.5.4",
+    "react-d3-graph": "^0.1.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",

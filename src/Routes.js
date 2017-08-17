@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 import images from './config/images';
 import styled, { keyframes } from 'styled-components';
 import D3Graph from './routes/D3Graph';
+import OneMore from './routes/D3Graph/oneMore.js';
 
 const spin = keyframes`
   from { transform: rotate(0deg); }
@@ -34,6 +35,9 @@ const Home = () => (
       <Link to='/graph' className='f5 f4-ns link black db pv2 ph3 hover-light-purple'>
         <p className='fw1 i tc mt4 mt5-l f4 f3-l pointer'>gRAPH??</p>
       </Link>
+      <Link to='/more-graph' className='f5 f4-ns link black db pv2 ph3 hover-light-purple'>
+        <p className='fw1 i tc mt4 mt5-l f4 f3-l pointer'>one more gRAPH??</p>
+      </Link>
     </Paper>
   </div>
 );
@@ -56,6 +60,7 @@ const Routes = () => (
     <Switch>
       <Route path='/' exact component={Home} />
       <Route path='/graph' exact component={D3Graph} />
+      <Route path='/more-graph' exact component={OneMore} />
       <Route component={NoMatch} />
     </Switch>
   </Router>
